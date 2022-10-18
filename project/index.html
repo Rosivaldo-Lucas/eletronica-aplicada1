@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Simulador Transistor</h1>
+
+    <span>Vbb</span>
+    <input type="number" id="Vbb">
+
+    <span>Rb</span>
+    <input type="number" id="Rb">
+
+    <br><br>
+
+    <span>Vcc</span>
+    <input type="number" id="Vcc">
+
+    <span>Rc</span>
+    <input type="number" id="Rc">
+
+    <br><br>
+
+    <span>Hfe (Ganho)</span>
+    <input type="number" id="Hfe">
+
+    <br><br>
+
+    <button onclick="calcular()">calcular</button>
+
+    <br><br><br>
+
+    <strong>Ib = </strong><strong id="Ib"></strong> <br>
+    <strong>Ic = </strong><strong id="Ic"></strong> <br>
+    <strong>Ie = </strong><strong id="Ie"></strong> <br>
+    <strong>Vce = </strong><strong id="Vce"></strong> <br>
+    <strong>Pd = </strong><strong id="Pd"></strong>
+
+    <script>
+
+        function calcular() {
+            var Vbb = parseFloat(document.getElementById("Vbb").value);
+            var Rb = parseFloat(document.getElementById("Rb").value);
+            var Vcc = parseFloat(document.getElementById("Vcc").value);
+            var Rc = parseFloat(document.getElementById("Rc").value);
+            var Hfe = parseFloat(document.getElementById("Hfe").value);
+
+            var Ib = calcularIb(Vbb, Rb, Vcc, Rc);
+            var Ic = calcularIc(Ib, Hfe);
+            var Ie = calcularIe(Ic, Ib);
+            var Vce = calcularVce(Vcc, Ic, Rc);
+            var Pd = calcularPd(Vce, Ic);
+        }
+
+        function calcularIb(Vbb, Rb, Vcc, Rc) {
+            var Vbe = 0.7;
+
+            var Ib = (Vbb - Vbe) / (Rb);
+
+            document.getElementById("Ib").innerHTML = Ib + " A";
+
+            return Ib;
+        }
+
+        function calcularIc(Ib, Hfe) {
+            var Ic = Hfe * Ib;
+
+            document.getElementById("Ic").innerHTML = Ic + " A";
+
+            return Ic;
+        }
+
+        function calcularVce(Vcc, Ic, Rc) {
+            var Vce = Vcc - (Ic * Rc);
+
+            document.getElementById("Vce").innerHTML = Vce + " V";
+
+            return Vce;
+        }
+
+        function calcularIe(Ic, Ib) {
+            var Ie = Ic + Ib;
+
+            document.getElementById("Ie").innerHTML = Ie + " A";
+
+            return Ie;
+        }
+
+        function calcularPd(Vce, Ic) {
+            var Pd = Vce * Ic;
+
+            document.getElementById("Pd").innerHTML = Pd + " W";
+
+            return Pd;
+        }
+
+    </script>
+
+</body>
+</html>
